@@ -43,14 +43,6 @@ We have modeled the data using Kimball’s approach with dimension and fact tabl
 
 - **Incremental Models**: To handle large datasets efficiently, several models, including `prep_yt_trending` and `fct_yt_trending`, use dbt’s incremental materialization. Incremental models update the warehouse by processing only new or changed data.
 
-#### Sample dbt Incremental Configuration:
-```sql
-{{
-    config(
-        materialized='incremental',
-        unique_key=['video_id', 'country_code', 'trending_date']
-    )
-}}
 
 ### SCD Type 2 for Dimensions
 For category names and channel metadata, we implemented SCD Type 2 to track historical changes. This allows us to analyze changes over time in:
