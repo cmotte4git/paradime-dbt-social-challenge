@@ -51,3 +51,46 @@ We have modeled the data using Kimball’s approach with dimension and fact tabl
         unique_key=['video_id', 'country_code', 'trending_date']
     )
 }}
+
+### SCD Type 2 for Dimensions
+For category names and channel metadata, we implemented SCD Type 2 to track historical changes. This allows us to analyze changes over time in:
+- **`dim_category`**: Tracks YouTube video categories.
+- **`dim_channel`**: Tracks historical changes in YouTube channel information.
+
+### Data Validation
+We use dbt tests to maintain data accuracy and quality:
+- **Uniqueness Tests**: Ensure primary keys, such as `video_id` and `category_id`, are unique.
+- **Foreign Key Tests**: Verify the integrity between fact and dimension tables.
+- **Incremental Model Tests**: Validate that the incremental logic is functioning correctly.
+
+### Project Models
+
+#### Dimension Models
+- **`dim_category`**: Tracks YouTube video categories using SCD2.
+- **`dim_channel`**: Tracks historical changes in YouTube channel metadata with SCD2.
+- **`dim_country`**: Static dimension providing metadata on countries.
+- **`dim_date`**: Date dimension table for time-related analysis.
+
+#### Fact Table
+- **`fct_yt_trending`**: The central fact table that tracks video trending metadata across multiple dimensions, such as country, date, and category.
+
+#### Snapshot Models
+- **`dim_channel_snapshot`**: Tracks historical changes in YouTube channel names using SCD2.
+- **`dim_category_snapshot`**: Tracks historical changes in YouTube categories using SCD2.
+
+
+### Data Flow
+- **Staging**: Data from the YouTube API is ingested into staging tables (`stg_yt_trending`, `stg_yt_category`).
+- **Preparation**: The staging data is processed, cleaned, and joined with dimensions (e.g., `prep_yt_trending`).
+- **Fact Table**: The `fct_yt_trending` fact table is built using incremental materialization.
+- **Mart Layer**: The final data mart (`mart_youtube_trending`) is used for high-level insights and reporting on YouTube video trends.
+
+### Tools and Technologies 🛠️
+- **AWS Lambda**: For daily API requests and storing data in Parquet format.
+- **DuckDB**: For quick, in-memory processing of API data.
+- **dbt (Data Build Tool)**: For building, transforming, and maintaining the data pipeline.
+- **GitLab CI/CD**: To manage the deployment of dbt transformations, following dbt best practices for incremental and full refresh models.
+- **Kimball Methodology**: Provides the foundation for designing the data warehouse with dimension and fact tables, ensuring scalability and performance.
+
+## Conclusion
+This project demonstrates the effective use of dbt to process and analyze YouTube trending data at scale. With incremental models, SCD Type 2 snapshots, and automated data ingestion through AWS Lambda, we ensure that both historical and current data are accurately tracked and efficiently transformed for high-quality insights into YouTube trends.
