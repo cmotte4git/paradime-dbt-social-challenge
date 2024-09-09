@@ -86,6 +86,9 @@ I use dbt tests to maintain data accuracy and quality:
 
 #### Snapshot Models
 - **`dim_channel_snapshot`**: Tracks historical changes in YouTube channel names using SCD2.
+  Channel title can change over time
+  ![image](https://github.com/user-attachments/assets/22ca13c9-6367-42a3-9641-381ed2e53cd6)
+
 - **`dim_category_snapshot`**: Tracks historical changes in YouTube categories using SCD2.
 
 
@@ -101,7 +104,6 @@ I use dbt tests to maintain data accuracy and quality:
 - **dbt (Data Build Tool)**: For building, transforming, and maintaining the data pipeline.
 - **GitLab CI/CD**: To manage the deployment of dbt transformations, following dbt best practices for incremental and full refresh models.
 - **Kimball Methodology**: Provides the foundation for designing the data warehouse with dimension and fact tables, ensuring scalability and performance.
-- 
 
 ### Analysis
 
