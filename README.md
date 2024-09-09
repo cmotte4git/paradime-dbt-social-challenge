@@ -11,7 +11,8 @@ I am still experimenting dbt, so I use this dbt project to learn with production
 - makefile
 - data_tests
   
-I let aside analysis part, I ran few analyses on Hex but I didn't leverage full potential from this dataset
+Main goal was to level up my dbt skills so modeling is much more developped than analysis on Hex
+
 ## Architectures
 ![image](https://github.com/user-attachments/assets/3d3929c7-080d-47d1-ba91-a6b8802913f2)
 
