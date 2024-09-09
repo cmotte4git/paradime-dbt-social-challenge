@@ -8,12 +8,16 @@ This project focuses on analyzing YouTube trending data across 15 countries, lev
 
 
 ## Data Sources and Lineage
-We use YouTube's API to collect two main datasets via AWS Lambda:
+I use YouTube's API to collect two main datasets via AWS Lambda powered by duckdb:
 
 - **YouTube Trending Videos**: Capturing metadata of trending videos across 15 countries.
+https://github.com/cmotte4git/paradime-dbt-social-challenge/blob/main/trending_statistic.py
 - **YouTube Categories**: Fetching trending video categories in the same countries.
+https://github.com/cmotte4git/paradime-dbt-social-challenge/blob/main/category_scraping.py
 
 Both datasets are enriched with additional metadata such as country information and date data for enhanced analytics.
+
+I also use historic data collected with same API: https://www.kaggle.com/datasets/rsrishav/youtube-trending-video-dataset
 
 ### Data Lineage
 1. **Source Tables**:
@@ -38,10 +42,10 @@ Both datasets are enriched with additional metadata such as country information 
 ## Methodology
 
 ### Kimball's Data Warehouse Approach
-We have modeled the data using Kimball’s approach with dimension and fact tables. Type-2 Slowly Changing Dimensions (SCD2) are implemented to track historical changes in categories and YouTube channel names.
+I have modeled the data using Kimball’s approach with dimension and fact tables. Type-2 Slowly Changing Dimensions (SCD2) are implemented to track historical changes in categories and YouTube channel names.
 
 ### Data Transformation Using dbt
-- **Staging Models**: Raw data from the YouTube API is loaded into staging tables (`stg_yt_trending`, `stg_yt_category`). Here, we apply light transformations to ensure data quality, such as removing duplicates and handling null values.
+- **Staging Models**: Raw data from the YouTube API is loaded into staging tables (`stg_yt_trending`, `stg_yt_category`). Here, I apply light transformations to ensure data quality, such as removing duplicates and handling null values.
 
 - **Preparation Models**: The staging data is further transformed into `prep_yt_trending`, `prep_yt_category`, and `prep_yt_channel`. These models apply more complex logic, including surrogate key generation, ensuring unique identifiers, and joining with date and country dimensions.
 
@@ -49,14 +53,14 @@ We have modeled the data using Kimball’s approach with dimension and fact tabl
 
 
 ### SCD Type 2 for Dimensions
-For category names and channel metadata, we implemented SCD Type 2 to track historical changes. This allows us to analyze changes over time in:
+For category names and channel metadata, I implemented SCD Type 2 to track historical changes. This allows us to analyze changes over time in:
 - **`dim_category`**: Tracks YouTube video categories.
 - **`dim_channel`**: Tracks historical changes in YouTube channel information.
 
 ### Data Validation
-We use dbt tests to maintain data accuracy and quality:
+I use dbt tests to maintain data accuracy and quality:
 - **Uniqueness Tests**: Ensure primary keys, such as `video_id` and `category_id`, are unique.
-- **Foreign Key Tests**: Verify the integrity between fact and dimension tables.
+- **Foreign Key Tests**: Verify the integrity betIen fact and dimension tables.
 - **Incremental Model Tests**: Validate that the incremental logic is functioning correctly.
 
 ### Project Models
@@ -89,4 +93,4 @@ We use dbt tests to maintain data accuracy and quality:
 - **Kimball Methodology**: Provides the foundation for designing the data warehouse with dimension and fact tables, ensuring scalability and performance.
 
 ## Conclusion
-This project demonstrates the effective use of dbt to process and analyze YouTube trending data at scale. With incremental models, SCD Type 2 snapshots, and automated data ingestion through AWS Lambda, we ensure that both historical and current data are accurately tracked and efficiently transformed for high-quality insights into YouTube trends.
+This project demonstrates the effective use of dbt to process and analyze YouTube trending data at scale. With incremental models, SCD Type 2 snapshots, and automated data ingestion through AWS Lambda, I ensure that both historical and current data are accurately tracked and efficiently transformed for high-quality insights into YouTube trends.
