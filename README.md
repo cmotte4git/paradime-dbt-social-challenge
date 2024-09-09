@@ -42,7 +42,8 @@ I also use historic data collected with same API: https://www.kaggle.com/dataset
 ## Methodology
 
 ### Kimball's Data Warehouse Approach
-I have modeled the data using Kimball’s approach with dimension and fact tables. Type-2 Slowly Changing Dimensions (SCD2) are implemented to track historical changes in categories and YouTube channel names.
+I modeled the data using Kimball’s dimension and fact tables approach. Type-2 Slowly Changing Dimensions (SCD2) are implemented to track historical changes in categories and YouTube channel names.
+I also insert dummy values in dimensions to always keep integrity when doing INNER JOIN between fact and dimensions. I created a macro (inspired by gitlab dbt stack) to insert dummmy values dynamically depending of data type and name.
 
 ### Data Transformation Using dbt
 - **Staging Models**: Raw data from the YouTube API is loaded into staging tables (`stg_yt_trending`, `stg_yt_category`). Here, I apply light transformations to ensure data quality, such as removing duplicates and handling null values.
@@ -61,7 +62,6 @@ For category names and channel metadata, I implemented SCD Type 2 to track histo
 I use dbt tests to maintain data accuracy and quality:
 - **Uniqueness Tests**: Ensure primary keys, such as `video_id` and `category_id`, are unique.
 - **Foreign Key Tests**: Verify the integrity betIen fact and dimension tables.
-- **Incremental Model Tests**: Validate that the incremental logic is functioning correctly.
 
 ### Project Models
 
