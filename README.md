@@ -3,6 +3,10 @@
 ## Introduction
 This project focuses on analyzing YouTube trending data across 15 countries, leveraging dbt (Data Build Tool) to implement a scalable, efficient data pipeline. The objective is to gain insights into trending videos and their metadata, following best practices like Kimball's methodology and dbt's incremental models for large datasets. The project aligns with dbt’s design patterns recommended by GitLab.
 
+## Architectures
+![image](https://github.com/user-attachments/assets/3d3929c7-080d-47d1-ba91-a6b8802913f2)
+
+
 ## Data Sources and Lineage
 We use YouTube's API to collect two main datasets via AWS Lambda:
 
