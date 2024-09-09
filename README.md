@@ -10,6 +10,7 @@ I am still experimenting dbt, so I use this dbt project to learn with production
 - tags
 - makefile
 - data_tests
+  
 I let aside analysis part, I ran few analyses on Hex but I didn't leverage full potential from this dataset
 ## Architectures
 ![image](https://github.com/user-attachments/assets/3d3929c7-080d-47d1-ba91-a6b8802913f2)
