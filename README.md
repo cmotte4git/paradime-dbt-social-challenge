@@ -1,8 +1,16 @@
 # YouTube Trending Data Analysis
 
 ## Introduction
-This project focuses on analyzing YouTube trending data across 15 countries, leveraging dbt (Data Build Tool) to implement a scalable, efficient data pipeline. The objective is to gain insights into trending videos and their metadata, following best practices like Kimball's methodology and dbt's incremental models for large datasets. The project aligns with dbt’s design patterns recommended by GitLab.
-
+This project focuses on analyzing YouTube trending data across 15 countries, leveraging dbt (Data Build Tool) to implement a scalable, efficient data pipeline. The objective is to gain insights into trending videos and their metadata.
+I am still experimenting dbt, so I use this dbt project to learn with production data dbt key features, AWS lambda function with duckdb and practice data warehouse techniques:
+- dim and fact tables
+- incremental
+- macros
+- snapshot for SCD2
+- tags
+- makefile
+- data_tests
+I let aside analysis part, I ran few analyses on Hex but I didn't leverage full potential from this dataset
 ## Architectures
 ![image](https://github.com/user-attachments/assets/3d3929c7-080d-47d1-ba91-a6b8802913f2)
 
@@ -94,3 +102,8 @@ I use dbt tests to maintain data accuracy and quality:
 
 ## Conclusion
 This project demonstrates the effective use of dbt to process and analyze YouTube trending data at scale. With incremental models, SCD Type 2 snapshots, and automated data ingestion through AWS Lambda, I ensure that both historical and current data are accurately tracked and efficiently transformed for high-quality insights into YouTube trends.
+
+## Full lineage
+
+![image](https://github.com/user-attachments/assets/b213aeae-c9ed-4c47-97b2-718d5334a21f)
+
