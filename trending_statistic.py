@@ -20,7 +20,7 @@ unsafe_characters = ['\n', '\r', '"']
 
 def prepare_feature(feature):
     """
-    Nettoie et entoure une chaîne de caractères de guillemets pour les CSV.
+    replace unsafe characters
     """
     for ch in unsafe_characters:
         feature = str(feature).replace(ch, "")
@@ -28,7 +28,7 @@ def prepare_feature(feature):
 
 def api_request(page_token, country_code, api_key):
     """
-    Effectue une requête API pour obtenir les vidéos en fonction du pays et du token de page.
+    Make an API call per country
     """
     request_url = f"https://www.googleapis.com/youtube/v3/videos?part=id,statistics,snippet{page_token}chart=mostPopular&regionCode={country_code}&maxResults=50&key={api_key}"
     request = requests.get(request_url)
@@ -39,7 +39,7 @@ def api_request(page_token, country_code, api_key):
 
 def get_videos(items, country_code):
     """
-    Extrait les données des vidéos et les formate en lignes CSV.
+    Extract data and output to csv format
     """
     lines = []
     for video in items:
@@ -70,9 +70,7 @@ def get_videos(items, country_code):
     return lines
 
 def get_pages(country_code, api_key, next_page_token="&"):
-    """
-    Collecte les pages de données pour un pays donné.
-    """
+    
     country_data = []
     
     while next_page_token is not None:
@@ -86,7 +84,7 @@ def get_pages(country_code, api_key, next_page_token="&"):
 
 def get_data(conn, bucket, country_codes, api_key):
     """
-    Traite les données des vidéos et les charge dans S3.
+    output to parquet and publish to S3 thanks to duckdb
     """
     conn.execute("CREATE TABLE all_countries (video_id VARCHAR, title VARCHAR, publishedAt VARCHAR, channelId VARCHAR, channelTitle VARCHAR, categoryId VARCHAR, country VARCHAR, trending_date VARCHAR, tags VARCHAR, view_count BIGINT, likes BIGINT, comment_count BIGINT, thumbnail_link VARCHAR, comments_disabled BOOLEAN, ratings_disabled BOOLEAN, description VARCHAR);")
     
@@ -110,7 +108,7 @@ def get_data(conn, bucket, country_codes, api_key):
 
 def lambda_handler(event, context):
     """
-    Fonction principale du handler Lambda.
+    main
     """
     try:
         api_key = os.getenv('api_key')
